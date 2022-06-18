@@ -13,8 +13,9 @@ class GameOfLife < Gosu::Window
     @board = create_board(@width, @height)
     @state = create_state
     @running = false
-    @counter = 1000
-    @max_counter = 1000
+    @max_counter = 100
+    @counter = @max_counter
+    # randomize_board
   end
 
   def button_down(button)
@@ -25,7 +26,7 @@ class GameOfLife < Gosu::Window
       @running = !@running
     when Gosu::MsLeft
       handle_left_mouse_click(mouse_x, mouse_y)
-    when Gosu::KbT
+    when Gosu::KbR
       randomize_board
     when Gosu::KbEqual
       @max_counter -= 50
@@ -115,7 +116,7 @@ class GameOfLife < Gosu::Window
 
     -1.upto(1) do |x|
       -1.upto(1) do |y|
-        next if x == 0 && y == 0
+        next if x == 0 && y == 0 # Self is not a neighbor
         check_x = i + x
         check_y = j + y
         next if check_x < 0 || check_y < 0 || check_x >= max || check_y >= max
